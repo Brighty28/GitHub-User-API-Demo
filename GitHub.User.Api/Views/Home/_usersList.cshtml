@@ -1,0 +1,66 @@
+﻿@model GitHub.User.Api.Models.User
+
+<div class="container">
+     @if (Model.Name != null)
+     {
+         <div class="col-sm-4">
+             <div class="row">
+                 <div class="col-sm-12">
+                     <img alt="@Model.Name" height="20" src="@Model.AvatarUrl" width="20" class="img-thumbnail">
+                 </div>
+             </div>
+         </div>
+         <div class="col-sm-12 col-md-8 col-md-pull-4">
+             <h2>@Html.DisplayNameFor(model => model.Name)</h2>
+             <p>@Html.DisplayFor(model => model.Name)</p>
+
+             <h2>@Html.DisplayNameFor(model => model.Location)</h2>
+
+             <p>@Html.DisplayFor(model => model.Location)</p>
+         </div>
+
+         <div class="row">
+         </div>
+     }
+     else
+     {
+         <h3 class="text-error">No items matched your search query!</h3>
+     }
+    @if (Model.RepoList.Count == 0)
+    {
+        <h3 class="text-error">No items matched your search query!</h3>
+    }
+    else
+    {
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Repository Name</th>
+                    <th>Url</th>
+                    <th>Stargazer Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var repo in Model.RepoList)
+                {
+        
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => repo.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => repo.Url)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => repo.StargazersCount)
+                        </td>
+                    </tr>
+        
+    
+                }
+
+            </tbody>
+        </table>
+    }
+</div>

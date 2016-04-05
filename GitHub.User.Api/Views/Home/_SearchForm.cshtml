@@ -1,0 +1,13 @@
+﻿@using (Ajax.BeginForm("GetUsers", "Home", FormMethod.Post,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "search-results"
+         }))
+{
+<div>
+    @Html.TextBox("userName")
+    <input type="submit" value="Search" />
+</div>      
+}

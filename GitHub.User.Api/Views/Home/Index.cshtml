@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@section featured {
+    <div class="jumbotron">
+        <div class="container">
+            <h1>GitHub User API</h1>
+            <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+        </div>
+    </div>
+}
+
+@using (Ajax.BeginForm("SearchUsers", "Home", FormMethod.Post, new AjaxOptions
+{
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST",
+    UpdateTargetId = "searchResult"
+}))
+{
+    <div class="form-group">
+        @Html.Label("userName", "Please enter username ")
+
+        @Html.TextBox("userName", null, new { required = "required" })
+        @Html.ValidationMessage("userName")
+    </div>      
+    
+    <input type="submit" value="Search" class="btn btn-default" />
+}
+
+<div id="searchResult">
+</div>
+
