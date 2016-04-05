@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using GitHub.User.Api.Models;
+using Microsoft.Ajax.Utilities;
 using Octokit;
 
 namespace GitHub.User.Api.Controllers
@@ -23,25 +25,36 @@ namespace GitHub.User.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> SearchUsers(string userName)
         {
+            // https://github.com/octokit/octokit.net/blob/master/docs/getting-started.md
             var github = new GitHubClient(new ProductHeaderValue("GitHubAPIApp"));
 
-            var user = await github.User.Get(userName);
+            var request = new SearchUsersRequest(userName);
 
-            // https://github.com/octokit/octokit.net/blob/master/docs/getting-started.md
-            //var user = "https://api.github.com/users" + "/" + user_name;
+            var result = await github.Search.SearchUsers(request);
 
-            var repos = await github.Repository.GetAllForUser(userName); //.Get(userName, userName);
-
-            var reposFiltered = repos.OrderByDescending(r => r.StargazersCount).Take(5);
-
-            var userDetails = new Models.User()
+            if (result.TotalCount > 0 && result.Items[0].Name != null)
             {
-                AvatarUrl = user.AvatarUrl,
-                Location = user.Location,
-                Name = userName != null ? user.Name : userName,
-                RepoList = reposFiltered.ToList()
-            };
-            return PartialView("_UsersList", userDetails);
+                var user = await github.User.Get(userName);
+
+                var repos = await github.Repository.GetAllForUser(userName);
+
+                var reposFiltered = repos.OrderByDescending(r => r.StargazersCount).Take(5);
+
+                var userDetails = new Models.User()
+                {
+                    AvatarUrl = user.AvatarUrl,
+                    Location = user.Location,
+                    Name = userName != null ? user.Name : userName,
+                    RepoList = reposFiltered.ToList()
+                };
+
+                return PartialView("_UsersList", userDetails);
+            }
+            
+            ModelState.AddModelError("No_users", "No items matched your search query!");
+
+            return PartialView("_UsersList", new Models.User());
+
         }
 
     }
