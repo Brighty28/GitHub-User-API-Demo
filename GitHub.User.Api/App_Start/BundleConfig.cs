@@ -24,7 +24,6 @@ namespace GitHub.User.Api
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/site.css",
                         "~/Content/bootstrap*"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

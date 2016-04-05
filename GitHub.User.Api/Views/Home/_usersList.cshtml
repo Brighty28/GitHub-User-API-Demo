@@ -1,31 +1,28 @@
 ﻿@model GitHub.User.Api.Models.User
 
 <div class="container">
-     @if (Model.Name != null)
-     {
-         <div class="col-sm-4">
-             <div class="row">
-                 <div class="col-sm-12">
-                     <img alt="@Model.Name" height="20" src="@Model.AvatarUrl" width="20" class="img-thumbnail">
-                 </div>
-             </div>
-         </div>
-         <div class="col-sm-12 col-md-8 col-md-pull-4">
-             <h2>@Html.DisplayNameFor(model => model.Name)</h2>
-             <p>@Html.DisplayFor(model => model.Name)</p>
 
-             <h2>@Html.DisplayNameFor(model => model.Location)</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading">User Details <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></div>
+        <div class="panel-body">
 
-             <p>@Html.DisplayFor(model => model.Location)</p>
-         </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <img alt="@Model.Name" height="20" src="@Model.AvatarUrl" width="20" class="img-thumbnail">
+                </div>
 
-         <div class="row">
-         </div>
-     }
-     else
-     {
-         <h3 class="text-error">No items matched your search query!</h3>
-     }
+                <div class="col-sm-4 col-md-4">
+                    <h2>@Html.DisplayNameFor(model => model.Name)</h2>
+                    <p>@Html.DisplayFor(model => model.Name)</p>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <h2>@Html.DisplayNameFor(model => model.Location)</h2>
+
+                    <p>@Html.DisplayFor(model => model.Location)</p>
+                </div>
+            </div>
+        </div>
+    </div>
     @if (Model.RepoList.Count == 0)
     {
         <h3 class="text-error">No items matched your search query!</h3>
@@ -50,10 +47,10 @@
                             @Html.DisplayFor(modelItem => repo.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => repo.Url)
+                            <a href="@repo.HtmlUrl" target="_blank">@Html.DisplayFor(modelItem => repo.HtmlUrl)</a>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => repo.StargazersCount)
+                            @Html.DisplayFor(modelItem => repo.StargazersCount) <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                         </td>
                     </tr>
         

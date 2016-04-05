@@ -26,21 +26,10 @@ namespace GitHub.User.Api.Controllers
             var github = new GitHubClient(new ProductHeaderValue("GitHubAPIApp"));
 
             var user = await github.User.Get(userName);
-            if (ModelState.IsValid)
-            {
 
-                if (!user.Name.Contains(userName))
-                {
-                    ModelState.AddModelError("Names", "Error");
-                    return PartialView("_usersList");
-                }
+            // https://github.com/octokit/octokit.net/blob/master/docs/getting-started.md
+            //var user = "https://api.github.com/users" + "/" + user_name;
 
-
-                // https://github.com/octokit/octokit.net/blob/master/docs/getting-started.md
-                //var user = "https://api.github.com/users" + "/" + user_name;
-
-            }
-            
             var repos = await github.Repository.GetAllForUser(userName); //.Get(userName, userName);
 
             var reposFiltered = repos.OrderByDescending(r => r.StargazersCount).Take(5);
@@ -52,7 +41,7 @@ namespace GitHub.User.Api.Controllers
                 Name = userName != null ? user.Name : userName,
                 RepoList = reposFiltered.ToList()
             };
-            return PartialView("_usersList", userDetails);
+            return PartialView("_UsersList", userDetails);
         }
 
     }
