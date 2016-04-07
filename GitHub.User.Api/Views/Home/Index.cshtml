@@ -7,27 +7,34 @@
         <div class="container">
             <h1>GitHub User API</h1>
             <p>This is am MVC app that searches the GitHub user API (https://api.github.com/users) with the user name entered below and returns the avatar, name and location. Another call is then made to get the repos for the same user these are ordered by star gazer count and filtered to show the top 5 in the table below the user details section.</p>
-            <p><a class="btn btn-primary btn-lg" href="https://developer.github.com/v3/" role="button">Learn more »</a></p>
+            <p><a class="btn btn-primary btn-lg" target="_blank" href="https://developer.github.com/v3/" role="button">Learn more »</a></p>
         </div>
     </div>
 }
 
-@using (Ajax.BeginForm("SearchUsers", "Home", FormMethod.Post, new AjaxOptions
-{
-    InsertionMode = InsertionMode.Replace,
-    HttpMethod = "POST",
-    UpdateTargetId = "searchResult"
-}, new { @class = "form-inline" }))
-{
-    <div class="form-group">
-        @Html.Label("userName", "Please enter username ")
+<div class="panel panel-default">
+    <div class="panel-heading"><text>Getting started</text> <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></div>
+    <div class="panel-body">
+        <p>To get started enter a GitHub user name in the from below</p>
 
-        @Html.TextBox("userName", null, new { required = "required" })
-        @Html.ValidationMessage("userName")
-    </div>      
-    
-    <input type="submit" value="Search" class="btn btn-default" />
-}
+        @using (Ajax.BeginForm("SearchUsers", "Home", FormMethod.Post, new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "searchResult"
+        }, new { @class = "form-inline" }))
+        {
+            <div class="form-group">
+                @Html.Label("userName", "Please enter username ")
+
+                @Html.TextBox("userName", null, new { required = "required" })
+                @Html.ValidationMessage("userName")
+            </div>
+
+            <input type="submit" value="Search" class="btn btn-default" />
+        }
+    </div>
+</div>
 
 <div id="searchResult">
 </div>

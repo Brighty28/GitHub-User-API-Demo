@@ -32,7 +32,7 @@ namespace GitHub.User.Api.Controllers
 
             var result = await github.Search.SearchUsers(request);
 
-            if (result.TotalCount > 0 && result.Items[0].Name != null)
+            if (result.TotalCount > 0 && result.Items[0].Login != null)
             {
                 var user = await github.User.Get(userName);
 
